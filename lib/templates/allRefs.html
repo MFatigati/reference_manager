@@ -1,0 +1,30 @@
+{{define "body"}}
+<h1>All References</h1>
+<table>
+    <thead>
+        <th>Title</th>
+        <th>Author last</th>
+        <th>Author first</th>
+        <th>Publication date</th>
+        <th>Ref ID</th>
+        <th>List ID</th>
+    </thead>
+    <tbody>
+        {{range .}}
+            <tr>
+                <td>{{.Title}}</td>
+                <td>{{.Author_last}}</td>
+                <td>{{.Author_first}}</td>
+                <td>{{.Publication_date}}</td>
+                <td>{{.ID}}</td>
+                <td>{{.List}}</td>
+                <td><a href="/reference/edit?refId={{.ID}}&refTitle={{.Title}}&refAuthorLast={{.Author_last}}&refAuthorFirst={{.Author_first}}&refDate={{.Publication_date}}&listID={{.List}}"><button>Edit</button></a></td> 
+                <td><a href="/reference/delete/{{.ID}}"><button>Delete</button></a></td>
+            </tr>
+        {{end}}
+    </tbody>
+</table>
+<div>
+    <a href="/lists"><button>Home</button></a>
+</div>
+{{end}}

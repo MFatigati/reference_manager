@@ -1,0 +1,15 @@
+{{define "body"}}
+<h1>Edit list (ID: {{.listID}})</h1>
+<!-- reminder: can't use PUT in HTML forms -->
+<form action="/list/edit" method="POST">
+  <label for="listTitle">Title:</label>
+  <input type="text" name="listTitle" value="{{.listName}}">
+  <input type="hidden" name="listID" value="{{.listID}}">
+  <label></label>
+  <input type="submit" value="Save" class="save-button">
+</form>
+<div>
+  <a href="/list/delete/{{.listID}}"><button>Delete</button></a>
+  <a href="/lists"><button>Home</button></a>
+</div>
+{{end}}

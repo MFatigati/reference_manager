@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Germania+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+
+body {
+  font-family: "Roboto Slab";
+  width: 100%;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 24px;
+  font-family: "Germania One";
+  color: brown;
+}
+
+table, th, td {
+  border: 1px solid;
+}
+
+table {
+  margin-bottom: 5px;
+}
+
+/* form {
+  padding: 3px;
+  border: 1px solid;
+} */
+
+form {
+  width: 300px;
+  padding: 3px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 3px;
+  margin-bottom: 5px;
+  /* border: 1px solid; */
+  border-width: 1px;
+  border: double;
+}
+
+.save-button {
+  margin-top: 5px;
+  width: 50px;
+}
+
+body > div > a {
+  display: block;
+  margin-bottom: 3px;
+}
+
+#all-ref-link {
+  display: inline;
+}
+
+.key-actions {
+  font-style: italic;
+}

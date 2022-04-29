@@ -1,0 +1,23 @@
+{{define "body"}}
+<h1>All lists</h1>
+<table>
+    <thead>
+        <th>Title</th>
+        <th>  </th>
+        <th>  </th>
+    </thead>
+    <tbody>
+        {{range .}}
+        <tr>
+            <td>{{.Title}}</td>
+            <td><a href="/list/{{.ID}}"><button>View</button></a></td>
+            <td><a href="/list/edit?listID={{.ID}}&listTitle={{.Title}}"><button>Edit</button></a></td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+<div>
+    <a href="/list/new"><button>Add new list</button></a>
+    <a href="/resetdb"><button>Reset database</button></a>
+</div>
+{{end}}

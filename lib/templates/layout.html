@@ -1,0 +1,20 @@
+{{define "layout1"}}
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <title>Reference Manager</title>
+	<link rel="stylesheet" href="/public/stylesheets/styles.css">
+</head>
+<body>
+  {{template "body" .}}
+  <ul>
+    <li>Key Actions</li>
+    <ul>
+        <li><span class="key-actions">Add, edit, and delete</span> references and lists using the above tools.</li>
+        <li><span class="key-actions">Sort, select, format, and output</span> your bibliography, by going to <a id="all-ref-link" href="/references">all references.</a></li>
+    </ul>
+</ul>
+</body>
+</html>
+{{end}}

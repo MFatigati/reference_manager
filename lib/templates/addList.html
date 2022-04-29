@@ -1,0 +1,12 @@
+{{define "body"}}
+<h1>Add a list</h1>
+<form action="/list/new" method="POST">
+  <label for="title">Title:</label>
+  <input type="text" name="title">
+  <label></label>
+  <input type="submit" value="Save" class="save-button">
+</form>
+<div>
+  <a href="/lists"><button>Home</button></a>
+</div>
+{{end}}
