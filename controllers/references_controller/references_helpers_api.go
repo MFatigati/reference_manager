@@ -43,7 +43,7 @@ func apiPostNewRef(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendAllRefsJSON(w http.ResponseWriter, r *http.Request) {
-	references, err := db_controller.SelectAllReferences()
+	references, err := db_controller.SelectAllReferences("title", true)
 	if err != nil {
 		error_controller.ErrorResponse(w, "Unable to get references", http.StatusInternalServerError)
 	}

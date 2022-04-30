@@ -158,9 +158,16 @@ func SelectAllLists() ([]List, error) {
 	return lists, nil
 }
 
-func SelectAllReferences() ([]Reference, error) {
+func SelectAllReferences(orderBy string, ascending bool) ([]Reference, error) {
+	var sortDirection string
+	if ascending {
+		sortDirection = "asc"
+	} else {
+		sortDirection = "desc"
+	}
 	var references []Reference
-	rows, err := db.Query("select * from texts")
+	query := fmt.Sprintf("select * from texts order by %v %v", orderBy, sortDirection)
+	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
 	}

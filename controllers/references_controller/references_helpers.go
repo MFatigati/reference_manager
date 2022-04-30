@@ -80,8 +80,36 @@ func showEditRefForm(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func queryToColumnHeader(param string) (header string) {
+	switch param {
+	case "title":
+		return "title"
+	case "last":
+		return "author_last"
+	case "first":
+		return "author_first"
+	case "date":
+		return "publication_date"
+	case "listID":
+		return "list"
+	case "refID":
+		return "id"
+	}
+	return "title"
+}
+
+var lastSort string
+var sortAsc bool
+
 func viewAllRefs(w http.ResponseWriter, r *http.Request) {
-	refs, err := db_controller.SelectAllReferences()
+	sortBy := r.URL.Query().Get("sortBy")
+	if lastSort == sortBy {
+		sortAsc = !sortAsc
+	}
+	lastSort = sortBy
+	sortBy = queryToColumnHeader(sortBy)
+
+	refs, err := db_controller.SelectAllReferences(sortBy, sortAsc)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		return
@@ -139,7 +167,7 @@ func deleteRefForm(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Error: %s", err)
 		return
 	}
-	references, err := db_controller.SelectAllReferences()
+	references, err := db_controller.SelectAllReferences("title", true)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		return
@@ -160,4 +188,15 @@ func deleteRefForm(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Deleted refeference.")
 	redirectToList := strconv.Itoa(currentRef.List)
 	http.Redirect(w, r, "/list/"+redirectToList, http.StatusSeeOther)
+}
+
+func outputSelected(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	selected := r.Form["selected"]
+	//fmt.Println(r.Form)
+	// for key, value := range r.Form {
+	// 	fmt.Printf("%s = %s\n", key, value)
+	// }
+	fmt.Println(selected)
+	http.Redirect(w, r, "/references", http.StatusSeeOther)
 }

@@ -17,6 +17,16 @@ table, th, td {
   border: 1px solid;
 }
 
+th {
+  background-color: grey;
+  color: white;
+}
+
+th > a:link, th > a:visited, th > a:hover, th > a:active {
+  color: white;
+  text-decoration: none;
+}
+
 table {
   margin-bottom: 5px;
 }

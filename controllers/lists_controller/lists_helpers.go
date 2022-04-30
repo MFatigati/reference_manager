@@ -72,7 +72,7 @@ func showSingleList(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		error_controller.ErrorResponse(w, "Unable to render this page", http.StatusInternalServerError)
 	}
-	refs, err := db_controller.SelectAllReferences()
+	refs, err := db_controller.SelectAllReferences("title", true)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		return
