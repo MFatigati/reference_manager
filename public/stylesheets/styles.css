@@ -53,7 +53,7 @@ form {
   width: 50px;
 }
 
-body > div > a {
+body > div > a, body > input {
   display: block;
   margin-bottom: 3px;
 }
@@ -64,4 +64,9 @@ body > div > a {
 
 .key-actions {
   font-style: italic;
+}
+
+.code {
+  font-family: monospace;
+  background-color: lightgray;
 }

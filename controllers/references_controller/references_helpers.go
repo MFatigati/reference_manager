@@ -3,7 +3,10 @@ package referencescontroller
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 
 	db_controller "example.com/ref_manager/controllers/db_controller"
@@ -190,6 +193,15 @@ func deleteRefForm(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/list/"+redirectToList, http.StatusSeeOther)
 }
 
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+	return false
+}
+
 func outputSelected(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	selected := r.Form["selected"]
@@ -198,5 +210,46 @@ func outputSelected(w http.ResponseWriter, r *http.Request) {
 	// 	fmt.Printf("%s = %s\n", key, value)
 	// }
 	fmt.Println(selected)
+	refs, err := db_controller.SelectAllReferences("title", true)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		return
+	}
+	filteredRefs := []db_controller.Reference{}
+	for _, ref := range refs {
+		if contains(selected, strconv.Itoa(ref.ID)) {
+			filteredRefs = append(filteredRefs, ref)
+		}
+	}
+	fmt.Println(filteredRefs)
+
+	home, _ := os.UserHomeDir()
+	filePath, _ := filepath.Abs(home + "/downloads/data.txt")
+	fmt.Println(filePath)
+	_, err = os.Create(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, ref := range filteredRefs {
+		title := ref.Title
+		last := ref.Author_last
+		first := ref.Author_first
+		date := ref.Publication_date
+		reference := fmt.Sprintf("%v, %v. %v, %v.\n", last, first, title, date)
+
+		if _, err = f.Write([]byte(reference)); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	if err := f.Close(); err != nil {
+		log.Fatal(err)
+	}
+
 	http.Redirect(w, r, "/references", http.StatusSeeOther)
 }
