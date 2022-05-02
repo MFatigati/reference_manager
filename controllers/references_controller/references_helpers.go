@@ -243,6 +243,17 @@ var fileOutput = regexp.MustCompile("file")
 
 var browserOutput = regexp.MustCompile("browser")
 
+func exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
+}
+
 func outputSelected(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	selected := r.Form["selected"]
@@ -262,10 +273,19 @@ func outputSelected(w http.ResponseWriter, r *http.Request) {
 			filteredRefs = append(filteredRefs, ref)
 		}
 	}
-	//fmt.Println(filteredRefs)
 
 	home, _ := os.UserHomeDir()
-	filePath, _ := filepath.Abs(home + "/downloads/data.txt")
+
+	var filePath string
+
+	downloadsExists, _ := exists(home + "/downloads")
+
+	if downloadsExists {
+		filePath, _ = filepath.Abs(home + "/downloads/data.txt")
+	} else {
+		filePath, _ = filepath.Abs(home + "/data.txt")
+	}
+
 	fmt.Println(filePath)
 	_, err = os.Create(filePath)
 	if err != nil {
