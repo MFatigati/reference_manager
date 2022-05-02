@@ -13,6 +13,7 @@ var formDeleteRoute = regexp.MustCompile("delete")
 var formOutputRoute = regexp.MustCompile("output")
 
 func ReferenceHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path, r.Method)
 	switch r.Method {
 	case "GET":
 		if formNewRoute.FindStringSubmatch(r.URL.Path) != nil {
@@ -42,6 +43,7 @@ func ReferenceHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ReferencesHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path, r.Method)
 	switch r.Method {
 	case "GET":
 		if apiRoute.FindStringSubmatch(r.URL.Path) != nil {

@@ -64,7 +64,7 @@ func showNewRefForm(w http.ResponseWriter, r *http.Request) {
 
 func showEditRefForm(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
-	fmt.Println(query)
+	//fmt.Println(query)
 	refId := string(query["refId"][0])
 	refTitle := string(query["refTitle"][0])
 	refAuthorLast := string(query["refAuthorLast"][0])
@@ -114,13 +114,48 @@ func viewAllRefs(w http.ResponseWriter, r *http.Request) {
 	lastSort = sortBy
 	sortBy = queryToColumnHeader(sortBy)
 
+	type refsForAllRefs struct {
+		Title            string
+		Author_last      string
+		Author_first     string
+		Publication_date string
+		ID               string
+		List             string
+		ListName         string
+	}
+	var data []refsForAllRefs
+
 	refs, err := db_controller.SelectAllReferences(sortBy, sortAsc)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		return
 	}
+
+	lists, err := db_controller.SelectAllLists()
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		return
+	}
+
+	for _, ref := range refs {
+		for _, list := range lists {
+			if ref.List == list.ID {
+				currentRef := refsForAllRefs{
+					Title:            ref.Title,
+					Author_last:      ref.Author_last,
+					Author_first:     ref.Author_first,
+					Publication_date: strconv.Itoa(ref.Publication_date),
+					ID:               strconv.Itoa(ref.ID),
+					List:             strconv.Itoa(ref.List),
+					ListName:         list.Title,
+				}
+				data = append(data, currentRef)
+			}
+		}
+	}
+
 	t, _ := template.ParseFiles("./lib/templates/layout.html", "./lib/templates/allRefs.html")
-	t.ExecuteTemplate(w, "layout1", refs)
+	t.ExecuteTemplate(w, "layout1", data)
 }
 
 func modifyExistingRefForm(w http.ResponseWriter, r *http.Request) {
@@ -215,7 +250,7 @@ func outputSelected(w http.ResponseWriter, r *http.Request) {
 	// for key, value := range r.Form {
 	// 	fmt.Printf("%s = %s\n", key, value)
 	// }
-	fmt.Println(selected)
+	//fmt.Println(selected)
 	refs, err := db_controller.SelectAllReferences("title", true)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -227,7 +262,7 @@ func outputSelected(w http.ResponseWriter, r *http.Request) {
 			filteredRefs = append(filteredRefs, ref)
 		}
 	}
-	fmt.Println(filteredRefs)
+	//fmt.Println(filteredRefs)
 
 	home, _ := os.UserHomeDir()
 	filePath, _ := filepath.Abs(home + "/downloads/data.txt")

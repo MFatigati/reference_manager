@@ -36,7 +36,7 @@ func main() {
 	http.HandleFunc("/list/", lists_controller.ListHandler)
 	http.HandleFunc("/reference/delete/", references_controller.ReferenceHandler)
 	http.HandleFunc("/reference/new", references_controller.ReferenceHandler)
-	http.HandleFunc("/reference/edit", references_controller.ReferenceHandler)
+	http.HandleFunc("/reference/edit/", references_controller.ReferenceHandler)
 	http.HandleFunc("/references/output", references_controller.ReferencesHandler)
 	http.HandleFunc("/references", references_controller.ReferencesHandler)
 	http.HandleFunc("/api/references", references_controller.ReferencesHandler)

@@ -6,8 +6,7 @@
        <th><a href="/references?sortBy=last">Author last</a></th>
        <th><a href="/references?sortBy=first">Author first</a></th>
        <th><a href="/references?sortBy=date">Publication date</a></th>
-       <th><a href="/references?sortBy=refID">Ref ID</a></th>
-       <th><a href="/references?sortBy=listID">List ID</a></th>
+       <th><a href="/references?sortBy=listID">List Title</a></th>
        <th>Select</a></th>
     </thead>
     <tbody>
@@ -18,11 +17,10 @@
                 <td>{{.Author_last}}</td>
                 <td>{{.Author_first}}</td>
                 <td>{{.Publication_date}}</td>
-                <td>{{.ID}}</td>
-                <td>{{.List}}</td>
+                <td>{{.ListName}}</td>
                 <td><input type="checkbox" id="selected" name="selected" value="{{.ID}}"></td>
-                <td><a href="/reference/edit?refId={{.ID}}&refTitle={{.Title}}&refAuthorLast={{.Author_last}}&refAuthorFirst={{.Author_first}}&refDate={{.Publication_date}}&listID={{.List}}"><button>Edit</button></a></td> 
-                <td><a href="/reference/delete/{{.ID}}"><button>Delete</button></a></td>
+                <td><a href="/reference/edit?refId={{.ID}}&refTitle={{.Title}}&refAuthorLast={{.Author_last}}&refAuthorFirst={{.Author_first}}&refDate={{.Publication_date}}&listID={{.List}}"><button type="button">Edit</button></a></td> 
+                <td><a href="/reference/delete/{{.ID}}"><button type="button">Delete</button></a></td>
             </tr>
             {{end}}
         </form>
