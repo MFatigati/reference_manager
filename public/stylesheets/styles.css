@@ -70,3 +70,10 @@ body > div > a, body > input {
   font-family: monospace;
   background-color: lightgray;
 }
+
+#output {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  row-gap: 3px;
+  margin-bottom: 3px;
+}

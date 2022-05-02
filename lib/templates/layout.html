@@ -8,6 +8,7 @@
 </head>
 <body>
   {{template "body" .}}
+  <hr>
   <ul>
     <li>Key Actions</li>
     <ul>
@@ -15,7 +16,14 @@
         <li><span class="key-actions">Sort, select, format, and output</span> your bibliography, by going to <a id="all-ref-link" href="/references">all references.</a></li>
         <li>"Output Bibliography" creates a file called <span class="code">data.txt</span> in your <span class="code">$HOME/downloads</span> folder.</li>
     </ul>
-</ul>
+  </ul>
+  <hr>
+    <div>
+      <a href="/lists"><button>Home</button></a>
+    </div>
+    <div>
+      <a href="/references"><button>All References</button></a>
+    </div>
 </body>
 </html>
 {{end}}

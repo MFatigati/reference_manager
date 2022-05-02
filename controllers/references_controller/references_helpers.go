@@ -7,7 +7,9 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
+	"strings"
 
 	db_controller "example.com/ref_manager/controllers/db_controller"
 	error_controller "example.com/ref_manager/controllers/error_controller"
@@ -202,6 +204,10 @@ func contains(s []string, str string) bool {
 	return false
 }
 
+var fileOutput = regexp.MustCompile("file")
+
+var browserOutput = regexp.MustCompile("browser")
+
 func outputSelected(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	selected := r.Form["selected"]
@@ -251,5 +257,9 @@ func outputSelected(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	http.Redirect(w, r, "/references", http.StatusSeeOther)
+	if fileOutput.FindStringSubmatch(strings.ToLower(r.FormValue("action"))) != nil {
+		http.Redirect(w, r, "/references", http.StatusSeeOther)
+	} else if browserOutput.FindStringSubmatch(strings.ToLower(r.FormValue("action"))) != nil {
+		http.ServeFile(w, r, filePath)
+	}
 }
